@@ -2,35 +2,41 @@
 
 int main()
 {
-    int choice;
+    FILE *file;
+    char ch;
+    int frequency[256] = {0};
+    int i;
 
-    printf("==============================\n");
-    printf("         FILE ZIPPER\n");
-    printf("==============================\n");
-    printf("1. Compress File\n");
-    printf("2. Decompress File\n");
-    printf("3. Exit\n");
-    printf("==============================\n");
+    file = fopen("sample.txt", "r");
 
-    printf("Enter your choice: ");
-    scanf("%d", &choice);
-
-    switch(choice)
+    if (file == NULL)
     {
-        case 1:
-            printf("Compress File selected.\n");
-            break;
+        printf("Could not open the file.\n");
+        return 1;
+    }
 
-        case 2:
-            printf("Decompress File selected.\n");
-            break;
+    /* Read the file and count characters */
+    while ((ch = fgetc(file)) != EOF)
+    {
+        frequency[(unsigned char)ch]++;
+    }
 
-        case 3:
-            printf("Exiting File Zipper...\n");
-            break;
+    fclose(file);
 
-        default:
-            printf("Invalid choice.\n");
+    /* Display character frequencies */
+    printf("Character Frequencies:\n\n");
+
+    for (i = 0; i < 256; i++)
+    {
+        if (frequency[i] > 0)
+        {
+            if (i == ' ')
+                printf("[space] : %d\n", frequency[i]);
+            else if (i == '\n')
+                printf("[newline] : %d\n", frequency[i]);
+            else
+                printf("%c : %d\n", i, frequency[i]);
+        }
     }
 
     return 0;
