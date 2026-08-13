@@ -193,7 +193,7 @@ struct Node *extractMin(struct MinHeap *heap)
        at index 0.
     */
 
-    minimum = heap->array[0];
+    minimum = heap->array[0]; 
 
     /*
        Take the last node.
